@@ -9,3 +9,4 @@ export {default as RangeWidget} from './Range';
 export {default as BooleanWidget} from './Boolean'
 export {default as MultiSelectWidget} from './MultiSelect';
 export {default as ValueFieldWidget} from './ValueField';
+export {default as ValueFunctionWidget} from './ValueFunction';

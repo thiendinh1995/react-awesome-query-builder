@@ -116,6 +116,7 @@ export default class Query extends Component {
             widgets: props.widgets,
             settings: props.settings,
             tree: props.value,
+            functions: props.functions,
         };
 
         const store = createTreeStore(config);
@@ -146,8 +147,8 @@ export default class Query extends Component {
     }
 
     render() {
-        const {conjunctions, fields, types, operators, widgets, settings, get_children, onChange, value, tree, children, ...props} = this.props;
-        let config = {conjunctions, fields, types, operators, widgets, settings};
+        const {conjunctions, functions, fields, types, operators, widgets, settings, get_children, onChange, value, tree, children, ...props} = this.props;
+        let config = {conjunctions, fields, types, operators, widgets, settings, functions,};
         config = extendConfig(config);
 
         return (

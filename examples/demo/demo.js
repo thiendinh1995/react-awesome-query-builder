@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Query, Builder, Preview, Utils} from 'react-awesome-query-builder';
 const {queryBuilderFormat, queryString, mongodbFormat} = Utils;
-import config from './config';
+import config from './config2';
 var stringify = require('json-stringify-safe');
 import '../../css/reset.scss';
 import '../../css/styles.scss';
@@ -30,7 +30,7 @@ if (!seriazlieAsImmutable) {
           return outValue;
         });
     };
-    initValue = '{"type":"group","id":"9a99988a-0123-4456-b89a-b1607f326fd8","children1":{"a98ab9b9-cdef-4012-b456-71607f326fd9":{"type":"rule","id":"a98ab9b9-cdef-4012-b456-71607f326fd9","properties":{"field":"multicolor","operator":"multiselect_equals","value":[["yellow","green"]],"valueSrc":["value"],"operatorOptions":null,"valueType":["multiselect"]},"path":["9a99988a-0123-4456-b89a-b1607f326fd8","a98ab9b9-cdef-4012-b456-71607f326fd9"]}},"properties":{"conjunction":"AND","not":false},"path":["9a99988a-0123-4456-b89a-b1607f326fd8"]}'
+    initValue = '{"type":"group","id":"9a99988a-0123-4456-b89a-b1607f326fd8","children1":{"a98ab9b9-cdef-4012-b456-71607f326fd9":{"type":"rule","id":"a98ab9b9-cdef-4012-b456-71607f326fd9","properties":{"field":"fullName","operator":"multiselect_equals","value":[["yellow","green"]],"valueSrc":["value"],"operatorOptions":null,"valueType":["multiselect"]},"path":["9a99988a-0123-4456-b89a-b1607f326fd8","a98ab9b9-cdef-4012-b456-71607f326fd9"]}},"properties":{"conjunction":"AND","not":false},"path":["9a99988a-0123-4456-b89a-b1607f326fd8"]}'
 } else {
     serializeTree = transit.toJSON;
     loadTree = transit.fromJSON;
@@ -132,7 +132,7 @@ export default class DemoQueryBuilder extends Component {
 
     render() {
         const {tree, ...config_props} = config;
-                
+            
         return (
             <div>
                 <Query 
