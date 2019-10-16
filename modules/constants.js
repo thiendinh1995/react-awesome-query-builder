@@ -27,3 +27,17 @@ export const PLACEMENT_PREPEND = 'prepend';
 export const SET_DRAG_PROGRESS = 'SET_DRAG_PROGRESS';
 export const SET_DRAG_START = 'SET_DRAG_START';
 export const SET_DRAG_END = 'SET_DRAG_END';
+
+// FUNCTION 
+export const DATA_TYPE = {
+    TEXT: 'text',
+    NUMBER: 'number',
+    BOOL: 'bool',
+    DATE: 'date',
+};
+export const VALUE_SOURCE_FUNCTION = {
+    FIELD: 'field',
+    CONSTANT: 'constant',
+    VALUE: 'value',
+}
+

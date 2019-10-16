@@ -48,22 +48,22 @@ export default {
         min: {
             label: 'Min',
             type: 'number',
-            capacityParams: 4,            
+            capacityParams: 4,
         },
         max: {
             label: 'Max',
             type: 'number',
-            capacityParams: 2,            
+            capacityParams: 2,
         },
         replaceText: {
             label: 'ReplaceText',
             type: 'text',
-            capacityParams: 2, 
+            capacityParams: 2,
         },
         sum: {
             label: 'Sum',
             type: 'number',
-            capacityParams: 2,            
+            capacityParams: 2,
         }
     },
     fields: {
@@ -548,7 +548,7 @@ export default {
             }
         },
     },
-    widgets: {       
+    widgets: {
         text: {
             type: "text",
             valueSrc: 'value',
@@ -570,6 +570,41 @@ export default {
                 return isForDisplay ? val : JSON.stringify(val);
             },
             //mongoFormatValue: (val, fieldDef, wgtDef) => (Number(val)),
+        },
+        slider: {
+            type: "number",
+            valueSrc: 'value',
+            factory: (props) => <SliderWidget {...props} />,
+            valueLabel: "Slider",
+            valuePlaceholder: "Move Slider",
+            formatValue: (val, fieldDef, wgtDef, isForDisplay) => {
+                return isForDisplay ? val : JSON.stringify(val);
+            },
+            customProps: {
+                width: '300px'
+            }
+        },
+        rangeslider: {
+            type: "number",
+            valueSrc: 'value',
+            factory: (props) => <RangeWidget {...props} />,
+            valueLabel: "Range",
+            valuePlaceholder: "Select Range",
+            formatValue: (val, fieldDef, wgtDef, isForDisplay) => {
+                return isForDisplay ? val : JSON.stringify(val);
+            },
+            customProps: {
+                width: '300px'
+            },
+            singleWidget: 'slider',
+            valueLabels: [
+                'Value from',
+                'Value to'
+            ],
+            textSeparators: [
+                null,
+                'and'
+            ],
         },
         select: {
             type: "select",
@@ -641,11 +676,13 @@ export default {
             type: 'funtion',
             valueSrc: 'function',
             factory: (props) => {
-                debugger
-                return  <ValueFunctionWidget {...props} />;
+                console.log('props', props);
+                return <ValueFunctionWidget {...props} />;
             },
             formatValue: (val, fieldDef, wgtDef, isForDisplay, valFieldDef) => {
-                return isForDisplay ? (valFieldDef.label || val) : val;
+                debugger
+                const { functionSelected, parameters } = val;
+                return `${functionSelected}(${parameters.concat()})`;
             },
             valueLabel: "Funtion",
             valuePlaceholder: "Select function to compare",

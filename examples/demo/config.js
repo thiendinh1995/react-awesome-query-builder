@@ -7,6 +7,8 @@ const {
     SliderWidget,
     RangeWidget,
     SelectWidget,
+    ConstantWidget,
+    ValueFunctionWidget,
     MultiSelectWidget,
     DateWidget,
     BooleanWidget,
@@ -43,7 +45,69 @@ export default {
             },
         },
     },
+    functions: {
+        min: {
+            key: 'min',
+            type: 'number',
+            functionName: 'Min',
+            params: ['text', 'number', 'bool']
+        },
+        max: {
+            key: 'max',
+            type: 'number',
+            functionName: 'Max',
+            params: ['text', 'bool']
+        },
+        replaceText: {
+            key: 'replaceText',
+            type: 'text',
+            functionName: 'ReplaceText',
+            params: ['text', 'text']
+        },
+        sum: {
+            key: 'sum',
+            type: 'number',
+            functionName: 'Sum',
+            params: ['number', 'number']
+        },
+        average: {
+            key: 'average',
+            type: 'number',
+            functionName: 'Average',
+            params: ['number', 'number', 'date']
+        }
+    },
     fields: {
+        fullName: {
+            label: 'Họ và tên',
+            type: 'text',
+            operators: [
+                "is_empty",
+                "is_not_empty",
+                "equal"
+            ],
+            defaultOperator: 'is_not_empty'
+        },
+        age: {
+            label: 'Tuổi',
+            type: 'number',
+            fieldSettings: {
+                min: 1,
+                max: 100
+            },
+            operators: [
+                "equal",
+                "not_equal",
+                "less",
+                "less_or_equal",
+                "greater",
+                "greater_or_equal",
+                "between",
+                "not_between",
+                "is_empty",
+                "is_not_empty",
+            ],
+        },
         members: {
             label: 'Members',
             type: '!struct',
@@ -270,7 +334,7 @@ export default {
         },
         number: {
             mainWidget: "number",
-            valueSources: ['value', 'field'],
+            valueSources: ['value', 'field', 'function', 'constant'],
             defaultOperator: 'equal',
             widgets: {
                 number: {
@@ -743,15 +807,7 @@ export default {
                 return isForDisplay ? '"' + valLabel + '"' : JSON.stringify(val);
             },
         },
-        multiselect: {
-            type: "multiselect",
-            valueSrc: 'value',
-            factory: (props) => <MultiSelectWidget {...props} />,
-            formatValue: (vals, fieldDef, wgtDef, isForDisplay) => {
-                let valsLabels = vals.map(v => fieldDef.listValues[v]);
-                return isForDisplay ? valsLabels.map(v => '"' + v + '"') : vals.map(v => JSON.stringify(v));
-            },
-        },
+        
         date: {
             type: "date",
             valueSrc: 'value',
@@ -808,7 +864,42 @@ export default {
             customProps: {
                 showSearch: true
             }
-        }
+        },
+        constant: {
+            type: "constant",
+            valueSrc: 'constant',
+            factory: (props) => <ConstantWidget {...props} />,
+            formatValue: (val, fieldDef, wgtDef, isForDisplay) => {
+                // let valLabel = fieldDef.listValues[val];
+                return isForDisplay ? '"' + JSON.stringify(val) + '"' : JSON.stringify(val);
+            },
+        },
+        function: {
+            type: 'funtion',
+            valueSrc: 'function',
+            defaultValueSrcParams: 'value',
+            valueSourceParams: [],
+            factory: (props) => {
+                return <ValueFunctionWidget {...props} />;
+            },
+            formatValue: (val, fieldDef, wgtDef, isForDisplay, valFieldDef) => {
+                const { functionSelected, parameters } = val;
+                const result = isForDisplay ? `${functionSelected}(${parameters.concat()})` : JSON.stringify(`${functionSelected}(${parameters.concat()})`);
+                return result;
+            },
+            customProps: {
+                showSearch: true
+            }
+        },
+        multiselect: {
+            type: "multiselect",
+            valueSrc: 'value',
+            factory: (props) => <MultiSelectWidget {...props} />,
+            formatValue: (vals, fieldDef, wgtDef, isForDisplay) => {
+                let valsLabels = vals.map(v => fieldDef.listValues[v]);
+                return isForDisplay ? valsLabels.map(v => '"' + v + '"') : vals.map(v => JSON.stringify(v));
+            },
+        },
     },
     settings: {
         locale: {
@@ -818,7 +909,7 @@ export default {
         },
         maxLabelsLength: 50,
         hideConjForOne: true,
-        renderSize: 'small',
+        renderSize: 'default',
         renderConjsAsRadios: false,
         renderFieldAndOpAsDropdown: false,
         customFieldSelectProps: {
@@ -839,6 +930,10 @@ export default {
         operatorLabel: "Operator",
         fieldPlaceholder: "Select field",
         operatorPlaceholder: "Select operator",
+        functionSeparator: '.',
+        functionSeparatorDisplay: '->',
+        functionLabel: "Function",
+        functionPlaceholder: "Select function",
         deleteLabel: null,
         addGroupLabel: "Add group",
         addRuleLabel: "Add rule",
@@ -876,6 +971,12 @@ export default {
             field: {
                 label: "Field",
                 widget: "field",
+            },
+            constant: {
+                label: "Constant",
+            },
+            function: {
+                label: 'Function'
             }
         },
         valueSourcesPopupTitle: "Select value source",
@@ -884,6 +985,9 @@ export default {
             //for type == 'select'/'multiselect' you can check listValues
             return true;
         },
+    },
+    data: {
+        constant: []
     }
 };
 

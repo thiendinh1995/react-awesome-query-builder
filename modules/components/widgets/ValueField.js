@@ -175,7 +175,7 @@ export default class ValueField extends Component {
     let placeholderWidth = calcTextWidth(placeholder, '14px');
     let fieldSelectItems = this.buildSelectItems(fieldOptions);
     let customProps = this.props.customProps || {};
-
+    
     let fieldSelect = (
           <Select
               dropdownAlign={dropdownPlacement ? BUILT_IN_PLACEMENTS[dropdownPlacement] : undefined}
@@ -186,7 +186,7 @@ export default class ValueField extends Component {
               size={this.props.config.settings.renderSize || "small"}
               onChange={this.handleFieldSelect}
               value={this.props.value || undefined}
-              filterOption={this.filterOption}
+              // filterOption={this.filterOption}
               {...customProps}
           >{fieldSelectItems}</Select>
     );
